@@ -59,17 +59,17 @@ if [[ -n "$CONFIG_FILE" ]]; then
 fi
 
 # === Default Paths (override in config) ===
-MLM_DIR="${MLM_DIR:-/lustre/fs1/portfolios/coreai/projects/coreai_dlalgo_modelopt/users/weimingc/workspace/Megatron-LM}"
-MODELOPT_DIR="${MODELOPT_DIR:-/lustre/fs1/portfolios/coreai/projects/coreai_dlalgo_modelopt/users/weimingc/workspace/TensorRT-Model-Optimizer}"
-MODELS_ROOT="${MODELS_ROOT:-/lustre/fs1/portfolios/coreai/projects/coreai_dlalgo_modelopt/users/weimingc/models}"
-QAD_CHECKPOINT_ROOT="${QAD_CHECKPOINT_ROOT:-/lustre/fs1/portfolios/coreai/projects/coreai_dlalgo_modelopt/users/weimingc/checkpoints}"
-DATACACHE_DIR="${DATACACHE_DIR:-/lustre/fs1/portfolios/coreai/projects/coreai_dlalgo_modelopt/users/weimingc/data_cache}"
+MLM_DIR="${MLM_DIR:?ERROR: MLM_DIR must be set in config}"
+MODELOPT_DIR="${MODELOPT_DIR:?ERROR: MODELOPT_DIR must be set in config}"
+MODELS_ROOT="${MODELS_ROOT:-}"
+QAD_CHECKPOINT_ROOT="${QAD_CHECKPOINT_ROOT:?ERROR: QAD_CHECKPOINT_ROOT must be set in config}"
+DATACACHE_DIR="${DATACACHE_DIR:?ERROR: DATACACHE_DIR must be set in config}"
 LOG_DIR="${LOG_DIR:-${QAD_CHECKPOINT_ROOT}/logs_slurm}"
 
 # Container settings
-CONTAINER_IMAGE="${CONTAINER_IMAGE:-/lustre/fs1/portfolios/coreai/projects/coreai_dlalgo_modelopt/users/weimingc/containers/pytorch_25.06-py3.sqsh}"
-CONTAINER_MOUNTS="${CONTAINER_MOUNTS:-/lustre/fs1:/lustre/fs1}"
-CONTAINER_WORKDIR="${CONTAINER_WORKDIR:-/lustre/fs1/portfolios/coreai/projects/coreai_dlalgo_modelopt/users/weimingc/workspace/TensorRT-Model-Optimizer/examples/llm_qad}"
+CONTAINER_IMAGE="${CONTAINER_IMAGE:?ERROR: CONTAINER_IMAGE must be set in config}"
+CONTAINER_MOUNTS="${CONTAINER_MOUNTS:-}"
+CONTAINER_WORKDIR="${CONTAINER_WORKDIR:-${MODELOPT_DIR}/examples/llm_qad}"
 
 # Parallelism (required from config)
 TP_SIZE="${TP_SIZE:?ERROR: TP_SIZE must be set in config}"
@@ -143,7 +143,7 @@ done
 # Optional
 [[ -n "${HF_TOKEN:-}" ]] && EXPORTS="${EXPORTS} && export HF_TOKEN=${HF_TOKEN} HUGGING_FACE_HUB_TOKEN=${HF_TOKEN}"
 [[ -n "${ITERATIONS_TO_SKIP:-}" ]] && EXPORTS="${EXPORTS} && export ITERATIONS_TO_SKIP=${ITERATIONS_TO_SKIP}"
-[[ -n "${DISTILL_CONFIG_PATH:-}" ]] && EXPORTS="${EXPORTS} && export DISTILL_CONFIG_PATH=${DISTILL_CONFIG_PATH}"
+[[ -n "${KD_CFG_PATH:-}" ]] && EXPORTS="${EXPORTS} && export KD_CFG_PATH=${KD_CFG_PATH}"
 
 # === Launch ===
 CONFIG_ARGS=""

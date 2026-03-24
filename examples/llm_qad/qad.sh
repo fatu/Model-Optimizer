@@ -181,7 +181,8 @@ CHECKPOINT_ARGS=" \
     ${LOAD_OPTIM_ARGS} \
     --load ${LOAD_CHECKPOINT_DIR} \
     --export-kd-teacher-load ${TEACHER_CKPT} \
-    --export-kd-teacher-model-config ${TEACHER_MODEL_CONFIG}"
+    --export-kd-teacher-model-config ${TEACHER_MODEL_CONFIG} \
+    ${CKPT_PARALLEL_LOAD_ARG}"
 
 # KD config (optional)
 if [[ -n "$KD_CFG_PATH" && -f "$KD_CFG_PATH" ]]; then
@@ -287,8 +288,7 @@ SAVE_ARGS=" \
     --save-retain-interval ${SAVE_RETAIN_INTERVAL} \
     --ckpt-format torch_dist \
     --ckpt-fully-parallel-save \
-    --ckpt-assume-constant-structure \
-    ${CKPT_PARALLEL_LOAD_ARG}"
+    --ckpt-assume-constant-structure"
 
 # Logging
 LOGGING_ARGS=" \

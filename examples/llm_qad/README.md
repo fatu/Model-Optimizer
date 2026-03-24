@@ -86,8 +86,8 @@ See [Megatron-LM ModelOpt examples](https://github.com/NVIDIA/Megatron-LM/tree/m
 
    | Variable | Default | Description |
    |----------|---------|-------------|
-   | `LR` | `1e-5` | Learning rate |
-   | `GBS` | `256` | Global batch size |
+   | `LR` | `5e-6` | Learning rate |
+   | `GBS` | `64` | Global batch size |
    | `SAVE_INTERVAL` | `200` | Checkpoint interval |
 
 ### Teacher Model Config (YAML)
